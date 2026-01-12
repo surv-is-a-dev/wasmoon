@@ -6,19 +6,6 @@ const { exec, execFile } = require('child_process');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const ensureEndSlash = (path) => {
-  if (path.includes('/')) {
-    if (path.endsWith('/')) {
-      return path;
-    }
-    return `${path}/`;
-  }
-  if (path.endsWith('\\')) {
-    return path;
-  }
-  return `${path}\\`;
-};
-
 function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none) {
   return new Promise((resolve, reject) => {
     if (useExecFile) {
@@ -44,7 +31,7 @@ function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none)
 if ((process.env.ENV_WITH_DOCKER || '') == 0) {
   execAndLink(
     false,
-    path.join(dirname, 'build.sh') + (isDev ? ' dev' : ''),
+    path.join(dirname, `build.${(process.env.ComSpec ?? '') ? 'bat' : 'sh'}`) + (isDev ? ' dev' : ''),
     {
       input: 'pipe',
       cwd: dirname,
@@ -53,22 +40,5 @@ if ((process.env.ENV_WITH_DOCKER || '') == 0) {
     },
   );
 } else {
-  execAndLink(
-    true,
-    'docker',
-    [
-      'run',
-      '--rm',
-      '-v', `${ensureEndSlash(dirname)}:/wasmoon`,
-      '-e', `ENV_WASM_NODEFS=${(process.env.ENV_WASM_NODEFS || '') == 0 ? '0' : '1'}`,
-      'emscripten/emsdk',
-      '/wasmoon/wasmoon/build.sh',
-    ].concat(isDev ? ['dev'] : []),
-    {
-      input: 'pipe',
-      cwd: dirname,
-      shell: false,
-      windowsHide: true,
-    },
-  );
+  throw new Error('Docker is no longer supported.');
 }
