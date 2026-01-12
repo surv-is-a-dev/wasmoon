@@ -1,5 +1,5 @@
 const path = require('path');
-const dirname = path.resolve(path.dirname(__filename));
+const dirname = path.resolve(path.dirname(__filename), '..');
 
 const process = require('process');
 const { exec, execFile } = require('child_process');
@@ -47,7 +47,7 @@ if ((process.env.ENV_WITH_DOCKER || '') == 0) {
       'run',
       '--rm',
       '-e', `ENV_WASM_NODEFS=${process.env.ENV_WASM_NODEFS == 0 ? '0' : '1'}`,
-      '-v', `"${JSON.stringify(path.posix.normalize(dirname)).slice(1, -1)}:/wasmoon"`,
+      '--mount', `type=volume,src=${JSON.stringify(path.posix.normalize(dirname)).slice(1, -1)},dst=/wasmoon`,
       'emscripten/emsdk',
       '/wasmoon/build.sh',
     ].concat(isDev ? ['dev'] : []),
