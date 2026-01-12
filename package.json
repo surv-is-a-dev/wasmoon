@@ -5,10 +5,8 @@
     "main": "./dist/index.js",
     "type": "module",
     "scripts": {
-        "build:wasm:dev": "npx cross-env ENV_WASM_NODEFS=1 ENV_WITH_DOCKER=0 NODE_ENV=development node ./wasmoon/build.cjs",
-        "build:wasm": "npx cross-env ENV_WASM_NODEFS=1 ENV_WITH_DOCkER=0 NODE_ENV=production node ./wasmoon/build.cjs",
-        "build:wasm:docker:dev": "npx cross-env ENV_WASM_NODEFS=1 ENV_WITH_DOCKER=1 NODE_ENV=development node ./wasmoon/build.cjs",
-        "build:wasm:docker": "npx cross-env ENV_WASM_NODEFS=1 ENV_WITH_DOCKER=1 NODE_ENV=production node ./wasmoon/build.cjs",
+        "build:wasm:dev": "npx cross-env ENV_WASM_NODEFS=1 NODE_ENV=development node ./wasmoon/build.cjs",
+        "build:wasm": "npx cross-env ENV_WASM_NODEFS=1 NODE_ENV=production node ./wasmoon/build.cjs",
         "start": "rolldown -w -c",
         "test": "mocha --parallel --require ./test/boot.js test/*.test.js",
         "luatests": "node --experimental-import-meta-resolve test/luatests.js",
