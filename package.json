@@ -5,8 +5,8 @@
     "main": "./dist/index.js",
     "type": "module",
     "scripts": {
-        "build:wasm:dev": "npx cross-env ENV_WASM_NODEFS=1 NODE_ENV=development node ./wasmoon/build.cjs",
-        "build:wasm": "npx cross-env ENV_WASM_NODEFS=1 NODE_ENV=production node ./wasmoon/build.cjs",
+        "build:wasm:dev": "npx cross-env ENV_WASM_NODEFS=1 NODE_ENV=development node ./build-wasm.cjs",
+        "build:wasm": "npx cross-env ENV_WASM_NODEFS=1 NODE_ENV=production node ./build-wasm.cjs",
         "start": "rolldown -w -c",
         "test": "mocha --parallel --require ./test/boot.js test/*.test.js",
         "luatests": "node --experimental-import-meta-resolve test/luatests.js",
