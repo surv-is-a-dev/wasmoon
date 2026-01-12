@@ -59,8 +59,8 @@ if ((process.env.ENV_WITH_DOCKER || '') == 0) {
     [
       'run',
       '--rm',
-      '-e', `ENV_WASM_NODEFS=${(process.env.ENV_WASM_NODEFS || '') == 0 ? '0' : '1'}`,
       '-v', `${ensureEndSlash(dirname)}:/wasmoon`,
+      '-e', `ENV_WASM_NODEFS=${(process.env.ENV_WASM_NODEFS || '') == 0 ? '0' : '1'}`,
       'emscripten/emsdk',
       '/wasmoon/wasmoon/build.sh',
     ].concat(isDev ? ['dev'] : []),
