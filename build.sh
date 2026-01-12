@@ -12,6 +12,11 @@ else
     extension="-O3"
 fi
 
+if [ -z "$ENV_WASM_NODEFS" ];
+then
+    extension="$extension -lnodefs.js"
+fi
+
 emcc \
     -s WASM=1 $extension -o ./build/glue.js \
     -s EXPORTED_RUNTIME_METHODS="[
