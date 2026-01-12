@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 const ensureEndSlash = (path) => {
   if (path.includes('/')) {
-    if (path.endsWith('/')) [
+    if (path.endsWith('/')) {
       return path;
     }
     return `${path}/`;
