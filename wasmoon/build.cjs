@@ -15,7 +15,7 @@ function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none)
         }
         stdout.pipe(process.stdout);
         stderr.pipe(process.stderr);
-      }).on((exit_code) => process.exitCode = exit_code);
+      }).on('close', (exit_code) => process.exitCode = exit_code);
     }
     return exec(cmd_or_file, args_or_options ?? {}, (error, stdout, stderr) => {
       if (error) {
@@ -23,7 +23,7 @@ function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none)
       }
       stdout.pipe(process.stdout);
       stderr.pipe(process.stderr);
-    }).on((exit_code) => process.exitCode = exit_code);
+    }).on('close', (exit_code) => process.exitCode = exit_code);
   });
   stdout.pipe(process.stdout);
 }
