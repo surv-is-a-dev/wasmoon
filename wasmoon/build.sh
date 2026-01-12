@@ -1,5 +1,6 @@
 #!/bin/bash -e
 cd $(dirname $0)
+cd ..
 mkdir -p build
 
 LUA_SRC=$(ls ./lua/*.c | grep -v "luac.c" | grep -v "lua.c" | tr "\n" " ")
