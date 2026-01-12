@@ -6,8 +6,6 @@ const { exec, execFile } = require('child_process');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const shellScript = `build.sh${isDev ? ' dev' : ''}`;
-
 function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none) {
   return new Promise((resolve, reject) => {
     if (useExecFile) {
@@ -46,7 +44,7 @@ if ((process.env.ENV_WITH_DOCKER || '') == 0) {
     true,
     'docker',
     [
-      'run'
+      'run',
       '--rm',
       '-e', `ENV_WASM_NODEFS=${process.env.ENV_WASM_NODEFS == 0 ? '0' : '1'}`,
       '-v', `${JSON.stringify(dirname)}:/wasmoon`,
