@@ -1,5 +1,5 @@
 const path = require('path');
-const __dirname = path.resolve(path.dirname(__filename));
+const dirname = path.resolve(path.dirname(__filename));
 
 const process = require('process');
 const { exec, execFile } = require('child_process');
@@ -33,10 +33,10 @@ function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none)
 if ((process.env.ENV_WITH_DOCKER || '') == 0) {
   execAndLink(
     false,
-    path.join(__dirname, 'build.sh') + (isDev ? ' dev' : ''),
+    path.join(dirname, 'build.sh') + (isDev ? ' dev' : ''),
     {
       input: 'pipe',
-      cwd: __dirname,
+      cwd: dirname,
       shell: true,
       windowsHide: true,
     },
@@ -49,13 +49,13 @@ if ((process.env.ENV_WITH_DOCKER || '') == 0) {
       'run'
       '--rm',
       '-e', `ENV_WASM_NODEFS=${process.env.ENV_WASM_NODEFS == 0 ? '0' : '1'}`,
-      '-v', `${JSON.stringify(__dirname)}:/wasmoon`,
+      '-v', `${JSON.stringify(dirname)}:/wasmoon`,
       'emscripten/emsdk',
       '/wasmoon/build.sh',
     ].concat(isDev ? ['dev'] : []),
     {
       input: 'pipe',
-      cwd: __dirname,
+      cwd: dirname,
       shell: false,
       windowsHide: true,
     },
