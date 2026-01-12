@@ -6,6 +6,19 @@ const { exec, execFile } = require('child_process');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
+const ensureEndSlash = (path) => {
+  if (path.includes('/')) {
+    if (path.endsWith('/')) [
+      return path;
+    }
+    return `${path}/`;
+  }
+  if (path.endsWith('\\')) {
+    return path;
+  }
+  return `${path}\\`;
+};
+
 function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none) {
   return new Promise((resolve, reject) => {
     if (useExecFile) {
@@ -46,10 +59,10 @@ if ((process.env.ENV_WITH_DOCKER || '') == 0) {
     [
       'run',
       '--rm',
-      '-e', `ENV_WASM_NODEFS=${process.env.ENV_WASM_NODEFS == 0 ? '0' : '1'}`,
-      '--mount', `type=volume,src=${dirname},dst=/wasmoon`,
+      '-e', `ENV_WASM_NODEFS=${(process.env.ENV_WASM_NODEFS || '') == 0 ? '0' : '1'}`,
+      '--mount', `type=volume,src=${ensureEndSlash(dirname)},dst=/wasmoon`,
       'emscripten/emsdk',
-      '/wasmoon/build.sh',
+      '/wasmoon/wasmoon/build.sh',
     ].concat(isDev ? ['dev'] : []),
     {
       input: 'pipe',
