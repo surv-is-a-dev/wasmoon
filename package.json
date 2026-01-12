@@ -7,8 +7,8 @@
     "scripts": {
         "build:wasm:dev": "ENV_WASM_NODEFS=1 ./build.sh dev",
         "build:wasm": "ENV_WASM_NODEFS=1 ./build.sh",
-        "build:wasm:docker:dev": "docker run --rm -e ENV_WASM_NODEFS=1 -v $(pwd):/wasmoon emscripten/emsdk /wasmoon/build.sh dev",
-        "build:wasm:docker": "docker run --rm -e ENV_WASM_NODEFS=1 -v $(pwd):/wasmoon emscripten/emsdk /wasmoon/build.sh",
+        "build:wasm:docker:dev": "docker run --rm -e ENV_WASM_NODEFS=1 -v .:/wasmoon emscripten/emsdk /wasmoon/build.sh dev",
+        "build:wasm:docker": "docker run --rm -e ENV_WASM_NODEFS=1 -v .:/wasmoon emscripten/emsdk /wasmoon/build.sh",
         "start": "rolldown -w -c",
         "test": "mocha --parallel --require ./test/boot.js test/*.test.js",
         "luatests": "node --experimental-import-meta-resolve test/luatests.js",
