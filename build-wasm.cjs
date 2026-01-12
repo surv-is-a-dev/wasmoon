@@ -22,12 +22,11 @@ function execAndLink(useExecFile, cmd_or_file, args_or_options, options_or_none)
       }).on('close', (exit_code) => process.exitCode = exit_code);
     }
     return exec(cmd_or_file, args_or_options ?? {}, (error) => {
-      if (error) 
+      if (error) {
         return reject(error);
       }
     }).on('close', (exit_code) => process.exitCode = exit_code);
   });
-  stdout.pipe(process.stdout);
 }
 
 try {
