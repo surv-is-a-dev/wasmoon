@@ -55,7 +55,7 @@ execAndLink(
       '-s', 'SAFE_HEAP=1',
       '-s', 'STACK_OVERFLOW_CHECK=2',
     ] : ['-O3'],
-    (withNodeFS ? ['-lnodefs.js'] : [],
+    withNodeFS ? ['-lnodefs.js'] : [],
     ['-o', './build/glue.js'],
     ['-s', `INCOMING_MODULE_JS_API="['locateFile', 'preRun']"`],
     [
