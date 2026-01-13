@@ -9,6 +9,7 @@ const path = require('path');
 const { exec, execFile } = require('child_process');
 
 const isDev = process.env.NODE_ENV !== 'production';
+const withNodeFS = (process.env.ENV_WASM_NODEFS ?? '') != 0;
 
 const dirname = path.resolve(path.dirname(__filename));
 
@@ -54,7 +55,7 @@ execAndLink(
       '-s', 'SAFE_HEAP=1',
       '-s', 'STACK_OVERFLOW_CHECK=2',
     ] : ['-O3'],
-    ((process.env.ENV_WASM_NODEFS ?? '') != 0) ? ['-lnodefs.js'] : [],
+    (withNodeFS ? ['-lnodefs.js'] : [],
     ['-o', './build/glue.js'],
     ['-s', `INCOMING_MODULE_JS_API="['locateFile', 'preRun']"`],
     [
@@ -77,6 +78,7 @@ execAndLink(
         'addFunction',
         'removeFunction',
         'FS',
+        'MEMFS',${withNodeFS ? '\n        \'NODEFS\',' : ''}
         'ENV',
         'getValue',
         'setValue',
